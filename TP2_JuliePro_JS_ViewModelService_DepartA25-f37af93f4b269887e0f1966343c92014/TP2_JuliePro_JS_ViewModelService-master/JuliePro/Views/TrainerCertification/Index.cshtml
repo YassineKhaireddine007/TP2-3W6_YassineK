@@ -3,6 +3,22 @@
 <script>
     // TODO: Ajouter la méthode highlightByName()
 
+     function highlightByName() {
+      const search = document.getElementById("searchInput").value.toLowerCase();
+      console.log(search)
+      const rows = document.querySelectorAll("tr");
+      console.log(rows)
+
+      rows.forEach(row => {
+        const trainerCell = row.querySelector("trainerFullName");
+        console.log(trainerCell)
+        if (!trainerCell) return;
+        const name = trainerCell.textContent.toLowerCase();
+        row.style.backgroundColor = name.includes(search) && search !== "" ? "yellow" : "";
+      });
+     
+        
+
     // TODO: Ajouter la méthode filterByDate()
 </script>
 
@@ -17,7 +33,7 @@
 </p>
 
 <h4>@Locals["HighlightByName"]</h4>
-<input type="text" oninput="highlightByName()" />
+<input type="text" oninput="highlightByName()" id="searchInput" />
 
 <h4>@Locals["FilterByDate"]</h4>
 <input type="date" />
@@ -42,7 +58,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                 <a asp-action="Filter" asp-controller="Trainer" asp-route-SearchNameText="@item.Trainer.FullName">
+                    <a asp-action="Filter" asp-controller="Trainer" asp-route-SearchNameText="@item.Trainer.FullName" >
                     @Html.DisplayFor(modelItem => item.Trainer.FullName)
                 </a>
             </td>
