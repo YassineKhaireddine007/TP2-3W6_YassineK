@@ -43,7 +43,7 @@ namespace JuliePro.Controllers
                 filter = new TrainerSearchViewModelFilter();
             }
 
-            // s'assurer d'une page de départ valide
+            
             if (filter.SelectedPageIndex <= 0) filter.SelectedPageIndex = 1;
 
             var model = await _service.GetAllAsync(filter);

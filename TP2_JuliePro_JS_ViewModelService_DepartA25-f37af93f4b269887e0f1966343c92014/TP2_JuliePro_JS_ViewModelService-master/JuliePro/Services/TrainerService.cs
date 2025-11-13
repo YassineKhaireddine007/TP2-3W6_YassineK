@@ -31,15 +31,20 @@ namespace JuliePro.Services
 
         public async Task<TrainerSearchViewModel> GetAllAsync(TrainerSearchViewModelFilter filter)
         {
-            filter.VerifyProperties();
+            filter.VerifyProperties(); //mets à null les éléments qui sont vides. 
 
             var result = new TrainerSearchViewModel(filter);
 
+            // Pour l'instant, on affiche tout sur la même page, car la pagination n'est pas encore fonctionnel
+
+            // TODO: Remplacer par ce code une fois que vous commencez à implémenter la pagination
             int pageIndex = filter.SelectedPageIndex;
             int pageSize = filter.SelectedPageSize;
 
+            //TODO: Ajouter les filtres
             result.Items = await _dbContext.Trainers.ToPaginatedAsync(pageIndex, pageSize);
 
+            //TODO: Ajouter les éléments dans les SelectLists 
             result.AvailablePageSizes = new SelectList(new List<int>() { 9, 12, 18, 21 });
             result.Disciplines = new SelectList(new List<Discipline>(), "Id", "Name");
             result.Certifications = new SelectList(new List<Certification>(), "Id", "FullTitle");
@@ -47,6 +52,5 @@ namespace JuliePro.Services
 
             return result;
         }
-
     }
 }
