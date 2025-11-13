@@ -34,12 +34,23 @@ namespace JuliePro.Controllers
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Filter(TrainerSearchViewModelFilter filter)
         {
-            //TODO implantez cette méthode (vous pouvez retourner la vue Index, avec le modèle filtré)!
+            if (filter == null)
+            {
+                filter = new TrainerSearchViewModelFilter();
+            }
 
-            return RedirectToAction(nameof(Index));
+            // s'assurer d'une page de départ valide
+            if (filter.SelectedPageIndex <= 0) filter.SelectedPageIndex = 1;
+
+            var model = await _service.GetAllAsync(filter);
+            return View("Index", model);
         }
+
+
 
 
         // GET: Trainer/Details/5

@@ -34,6 +34,35 @@
 
 
      // TODO: Ajouter la méthode filterByDate()
+
+    //            function filterByDate()
+    // {
+    //     let filtreDate = document.getElementById("dateInput").value.toLowerCase();
+    //     let lignes = document.getElementsByTagName("tr");
+
+    //     for (let tr of lignes)
+    //     {
+    //         let celluleDate = tr.getElementsByTagName("td")[2]; 
+
+    //         if (celluleDate)
+    //         {
+    //             let texteDate = celluleDate.innerText.toLowerCase();
+
+    //             if (texteDate.includes(filtreDate) && filtreDate != "")
+    //             {
+    //                 tr.style.display = "";
+    //             }
+    //             else if (filtreDate == "")
+    //             {
+    //                 tr.style.display = "";
+    //             }
+    //             else
+    //             {
+    //                 tr.style.display = "none";
+    //             }
+    //         }
+    //     }
+    // }
 </script>
 
 
@@ -51,8 +80,8 @@
 <input id="searchInput"  type="text" oninput="highlightByName()" />
 
 <h4>@Locals["FilterByDate"]</h4>
-<input type="date" />
-<button onclick="filterByDate()" class="btn btn-primary">@Locals["Filter"]</button>
+<input type="date" id="dateInput" />
+<button  onclick="filterByDate()" class="btn btn-primary">@Locals["Filter"] </button>
 
 <table class="table">
     <thead>
