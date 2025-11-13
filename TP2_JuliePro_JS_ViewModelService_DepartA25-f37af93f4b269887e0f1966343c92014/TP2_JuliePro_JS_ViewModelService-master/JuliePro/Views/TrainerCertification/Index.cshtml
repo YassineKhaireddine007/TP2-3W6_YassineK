@@ -35,6 +35,26 @@
 
      // TODO: Ajouter la méthode filterByDate()
 
+         function filterByDate() {
+        let dateInputValue = document.getElementById("dateInput").value;
+        let dateFiltre = new Date(dateInputValue); 
+        let lignes = document.getElementsByTagName("tr");
+
+        for (let tr of lignes) {
+            let celluleDate = tr.getElementsByTagName("td")[2];
+            if (celluleDate) {
+                let texteDate = celluleDate.innerText;
+                let cellDateObj = new Date(texteDate);
+
+                
+                if (dateInputValue === "" || cellDateObj.toISOString().slice(0,10) === dateFiltre.toISOString().slice(0,10)) {
+                    tr.style.backgroundColor = "yellow";
+                } else {
+                     tr.style.backgroundColor = "";
+                }
+            }
+        }
+    }
     //            function filterByDate()
     // {
     //     let filtreDate = document.getElementById("dateInput").value.toLowerCase();
