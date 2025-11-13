@@ -3,29 +3,34 @@
 <script>
     
      // Méthode pour surligner les lignes selon le nom
-     function highlightByName() {
-    let recherche = document.getElementById("searchInput").value.toLowerCase();
-    let lignes = document.getElementsByTagName("tr");
 
-    for (let ligne of lignes) {
-        let cellules = ligne.getElementsByTagName("td");
-        let trouve = false;
+     function highlightByName() 
+    {
+         let recherche = document.getElementById("searchInput").value.toLowerCase();
+         let lignes = document.getElementsByTagName("tr");
 
-        for (let i = 0; i < cellules.length; i++) {
-            let texte = cellules[i].innerText.toLowerCase();
-            if (texte.includes(recherche) && recherche !== "") {
-                trouve = true;
+        for (let tr of lignes) 
+        {
 
+        let cellules = tr.getElementsByTagName("td")[0] ;
+
+         if (cellules)
+         {
+             let celluleNom = cellules.innerText.toLowerCase() ;
+            if (celluleNom.includes(recherche) & recherche !== "") 
+            {
+                tr.style.backgroundColor = "yellow";
+            } else 
+            {
+                tr.style.backgroundColor = "";
             }
-        }
+         }
 
-        if (trouve) {
-            ligne.style.backgroundColor = "yellow";
-        } else {
-            ligne.style.backgroundColor = "";
-        }
+
+         }
     }
-}
+   
+
 
 
      // TODO: Ajouter la méthode filterByDate()
