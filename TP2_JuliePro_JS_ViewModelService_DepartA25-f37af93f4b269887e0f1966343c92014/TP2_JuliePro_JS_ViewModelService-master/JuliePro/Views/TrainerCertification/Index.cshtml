@@ -1,26 +1,36 @@
 @model IEnumerable<JuliePro.Models.TrainerCertification>
 
 <script>
-    // TODO: Ajouter la méthode highlightByName()
-
+    
+     // Méthode pour surligner les lignes selon le nom
      function highlightByName() {
-      const search = document.getElementById("searchInput").value.toLowerCase();
-      console.log(search)
-      const rows = document.querySelectorAll("tr");
-      console.log(rows)
+    let recherche = document.getElementById("searchInput").value.toLowerCase();
+    let lignes = document.getElementsByTagName("tr");
 
-      rows.forEach(row => {
-        const trainerCell = row.querySelector("trainerFullName");
-        console.log(trainerCell)
-        if (!trainerCell) return;
-        const name = trainerCell.textContent.toLowerCase();
-        row.style.backgroundColor = name.includes(search) && search !== "" ? "yellow" : "";
-      });
-     
-        
+    for (let ligne of lignes) {
+        let cellules = ligne.getElementsByTagName("td");
+        let trouve = false;
 
-    // TODO: Ajouter la méthode filterByDate()
+        for (let i = 0; i < cellules.length; i++) {
+            let texte = cellules[i].innerText.toLowerCase();
+            if (texte.includes(recherche) && recherche !== "") {
+                trouve = true;
+
+            }
+        }
+
+        if (trouve) {
+            ligne.style.backgroundColor = "yellow";
+        } else {
+            ligne.style.backgroundColor = "";
+        }
+    }
+}
+
+
+     // TODO: Ajouter la méthode filterByDate()
 </script>
+
 
 @{
     ViewData["Title"] = @Locals["Index"];
@@ -33,7 +43,7 @@
 </p>
 
 <h4>@Locals["HighlightByName"]</h4>
-<input type="text" oninput="highlightByName()" id="searchInput" />
+<input id="searchInput"  type="text" oninput="highlightByName()" />
 
 <h4>@Locals["FilterByDate"]</h4>
 <input type="date" />
