@@ -47,7 +47,7 @@
                 let cellDateObj = new Date(texteDate);
 
                 
-                if (dateInputValue === "" || cellDateObj.toISOString().slice(0,10) === dateFiltre.toISOString().slice(0,10)) {
+                if (dateInputValue === "" || cellDateObj.toISOString().slice(0,10) >= dateFiltre.toISOString().slice(0,10)) {
                     tr.style.backgroundColor = "yellow";
                 } else {
                      tr.style.backgroundColor = "";
