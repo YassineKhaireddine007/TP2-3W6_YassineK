@@ -48,41 +48,14 @@
 
                 
                 if (dateInputValue === "" || cellDateObj.toISOString().slice(0,10) >= dateFiltre.toISOString().slice(0,10)) {
-                    tr.style.backgroundColor = "yellow";
-                } else {
-                     tr.style.backgroundColor = "";
-                }
+                   tr.style.display = "";
+            } else {
+                tr.style.display = "none";
+            }
             }
         }
     }
-    //            function filterByDate()
-    // {
-    //     let filtreDate = document.getElementById("dateInput").value.toLowerCase();
-    //     let lignes = document.getElementsByTagName("tr");
-
-    //     for (let tr of lignes)
-    //     {
-    //         let celluleDate = tr.getElementsByTagName("td")[2]; 
-
-    //         if (celluleDate)
-    //         {
-    //             let texteDate = celluleDate.innerText.toLowerCase();
-
-    //             if (texteDate.includes(filtreDate) && filtreDate != "")
-    //             {
-    //                 tr.style.display = "";
-    //             }
-    //             else if (filtreDate == "")
-    //             {
-    //                 tr.style.display = "";
-    //             }
-    //             else
-    //             {
-    //                 tr.style.display = "none";
-    //             }
-    //         }
-    //     }
-    // }
+    
 </script>
 
 

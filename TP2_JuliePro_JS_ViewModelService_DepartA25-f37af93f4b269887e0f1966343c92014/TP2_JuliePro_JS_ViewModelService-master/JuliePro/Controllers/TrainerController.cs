@@ -44,7 +44,8 @@ namespace JuliePro.Controllers
             }
 
             
-            if (filter.SelectedPageIndex <= 0) filter.SelectedPageIndex = 1;
+            if (filter.SelectedPageIndex <= 0) 
+                filter.SelectedPageIndex = 1;
 
             var model = await _service.GetAllAsync(filter);
             return View("Index", model);

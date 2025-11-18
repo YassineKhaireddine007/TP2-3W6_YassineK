@@ -35,7 +35,7 @@ namespace JuliePro.Services
 
             var result = new TrainerSearchViewModel(filter);
 
-            // Pour l'instant, on affiche tout sur la même page, car la pagination n'est pas encore fonctionnel
+
 
             // TODO: Remplacer par ce code une fois que vous commencez à implémenter la pagination
             int pageIndex = filter.SelectedPageIndex;
@@ -44,11 +44,28 @@ namespace JuliePro.Services
             //TODO: Ajouter les filtres
             result.Items = await _dbContext.Trainers.ToPaginatedAsync(pageIndex, pageSize);
 
-            //TODO: Ajouter les éléments dans les SelectLists 
+
+
             result.AvailablePageSizes = new SelectList(new List<int>() { 9, 12, 18, 21 });
-            result.Disciplines = new SelectList(new List<Discipline>(), "Id", "Name");
-            result.Certifications = new SelectList(new List<Certification>(), "Id", "FullTitle");
-            result.CertificationCenters = new SelectList(new List<string>());
+
+            result.Disciplines = new SelectList(
+                _dbContext.Disciplines.ToList(),
+                "Id",
+                "Name"
+            );
+
+            result.Certifications = new SelectList(
+                _dbContext.Certifications.ToList(),
+                "Id",
+                "FullTitle"
+            );
+
+            result.CertificationCenters = new SelectList(
+                _dbContext.Certifications
+                    .Select(c => c.CertificationCenter)
+                    .Distinct()
+                    .ToList()
+            );
 
             return result;
         }
