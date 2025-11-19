@@ -42,7 +42,14 @@ namespace JuliePro.Services
             int pageSize = filter.SelectedPageSize;
 
             //TODO: Ajouter les filtres
-            result.Items = await _dbContext.Trainers.ToPaginatedAsync(pageIndex, pageSize);
+            result.Items = await _dbContext.Trainers
+                .Where(x => filter.SearchNameText == null || x.FirstName.ToLower() == filter.SearchNameText || x.LastName.ToLower() == filter.SearchNameText)
+                .Where(x => filter.SelectedGender == null || x.Genre == filter.SelectedGender)
+                .Where(x => filter.SelectedDisciplineId == null || x.Discipline_Id == filter.SelectedDisciplineId)
+                //.Where(x => filter.SelectedCertificationId == null || x.TrainerCertifications)
+                .ToPaginatedAsync(pageIndex, pageSize) ;
+
+            
 
 
 

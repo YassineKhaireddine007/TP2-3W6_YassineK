@@ -34,19 +34,10 @@ namespace JuliePro.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> Filter(TrainerSearchViewModelFilter filter)
         {
-            if (filter == null)
-            {
-                filter = new TrainerSearchViewModelFilter();
-            }
-
             
-            if (filter.SelectedPageIndex <= 0) 
-                filter.SelectedPageIndex = 1;
-
             var model = await _service.GetAllAsync(filter);
             return View("Index", model);
         }
