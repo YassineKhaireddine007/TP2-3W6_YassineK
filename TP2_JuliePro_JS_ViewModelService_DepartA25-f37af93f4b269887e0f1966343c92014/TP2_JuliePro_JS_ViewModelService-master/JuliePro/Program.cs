@@ -3,11 +3,29 @@ using JuliePro.DataSeed;
 using JuliePro.Services;
 using JuliePro.Utility;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews()
-    .AddViewLocalization(); //TODO : ajoutez la bonne configuration
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization();
+
+builder.Services.AddLocalization(options => options.ResourcesPath = "i18n");
+
+var supportedCultures = new[] { new CultureInfo("fr-CA"), new CultureInfo("en-CA") };
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("fr-CA");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
+
+
 
 builder.Services.AddDbContext<JulieProDbContext>(opt => {
 
@@ -26,7 +44,12 @@ builder.Services.AddSingleton<IImageFileManager, ImageFileManager>();
 
 
 
+
 var app = builder.Build();
+
+var locOptions = app.Services.GetRequiredService<
+    Microsoft.Extensions.Options.IOptions<RequestLocalizationOptions>>().Value;
+app.UseRequestLocalization(locOptions);
 
 
 

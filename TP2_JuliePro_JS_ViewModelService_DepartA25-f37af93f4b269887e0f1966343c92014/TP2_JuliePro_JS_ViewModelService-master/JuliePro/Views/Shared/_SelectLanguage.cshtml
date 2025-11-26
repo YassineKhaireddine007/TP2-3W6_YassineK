@@ -1,0 +1,8 @@
+﻿<form method="post" asp-action="SetLanguage" asp-controller="Home">
+    <select name="culture" onchange="this.form.submit()">
+        <option value="">-- Choisir une langue --</option>
+        <option value="fr-CA">Français</option>
+        <option value="en-US">English</option>
+    </select>
+    <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+</form>
