@@ -76,12 +76,14 @@
             @foreach (var item in Model.Items)
            {
 
-    <div class="card" >
+            <div class="card trainer-card">
+
           <img src="@(JuliePro.Utility.AppConstants.ImagePathView + item.Photo)">
 
       <div class="card-body">
         <h5 class="card-title">@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName), @Html.DisplayFor(modelItem => item.Discipline.Name)</h5>
-        <aside class="">
+                    <aside class="trainer-details">
+
              <table class="table ">
       <tr>  <th class = "col-sm-2">
             @Html.DisplayNameFor(model => item.FirstName)
