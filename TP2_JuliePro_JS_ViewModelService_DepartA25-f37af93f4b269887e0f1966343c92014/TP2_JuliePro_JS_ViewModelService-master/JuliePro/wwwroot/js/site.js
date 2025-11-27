@@ -16,3 +16,12 @@ $(document).ready(function () {
     });
 
 });
+
+
+$(document).ready(function () {
+    $('.pagination .page-link').on('click', function () {
+        let pageId = $(this).data('page-id');
+        $('#pageIndexInput').val(pageId);
+        $('#filterForm').submit();
+    });
+});

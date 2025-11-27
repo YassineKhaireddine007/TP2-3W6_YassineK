@@ -56,11 +56,7 @@
                 </select>
                
                 <br/>
-                 <label asp-for="SelectedPageIndex" class="control-label"></label>
-               
-                <input  asp-for="SelectedPageIndex"  class="form-control"  readonly />
-               
-                
+                <input asp-for="SelectedPageIndex" id="pageIndexInput" type="hidden" />
                 <br/>
                 
 <a asp-action="Index" class="btn btn-danger">@Locals["Reset"]</a>
@@ -168,16 +164,43 @@
 
     </div>
     <div id="content-pagination">
-<nav >
-  <ul class="pagination" >
-   
-            <li class="page-item"><span data-page-id="0" class="page-link" >@Locals["Previous"]</span></li>
-            <li class="page-item active"><span class="page-link" data-page-id="0">1</span></li>
-            <li class="page-item"><span class="page-link" data-page-id="1">2</span></li>
-            <li class="page-item"><span class="page-link" data-page-id="1" >@Locals["Next"]</span></li>
-             
-  </ul>
-</nav>
+
+    <nav>
+        <ul class="pagination">
+
+            
+            @if (Model.Items.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <span class="page-link pagination-btn" data-page-id="@((Model.Items.PageIndex - 1))">
+                        @Locals["Previous"]
+                    </span>
+                </li>
+            }
+
+            
+            @for (int p = 0; p < Model.Items.TotalPages; p++)
+            {
+                <li class="page-item @(p == Model.Items.PageIndex ? "active" : "")">
+                    <span class="page-link pagination-btn" data-page-id="@p">
+                        @(p + 1)
+                    </span>
+                </li>
+            }
+
+            
+            @if (Model.Items.HasNextPage)
+            {
+                <li class="page-item">
+                    <span class="page-link pagination-btn" data-page-id="@((Model.Items.PageIndex + 1))">
+                        @Locals["Next"]
+                    </span>
+                </li>
+            }
+
+        </ul>
+    </nav>
+
 </div>
 
 

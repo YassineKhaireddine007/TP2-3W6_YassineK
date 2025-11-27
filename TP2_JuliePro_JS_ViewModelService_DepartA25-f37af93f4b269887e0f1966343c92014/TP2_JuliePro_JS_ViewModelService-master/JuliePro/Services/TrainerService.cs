@@ -47,7 +47,7 @@ namespace JuliePro.Services
                 .Where(x => filter.SelectedGender == null || x.Genre == filter.SelectedGender)
                 .Where(x => filter.SelectedDisciplineId == null || x.Discipline_Id == filter.SelectedDisciplineId)
                 .Where(x => filter.SelectedCertificationId == null || x.Id == filter.SelectedCertificationId)
-                .Where(x => filter.SelectedCertificationCenter == null || x.)
+                .Where(x => filter.SelectedCertificationCenter == null || x.TrainerCertifications.Any(d => d.Certification.CertificationCenter == filter.SelectedCertificationCenter))
                 .ToPaginatedAsync(pageIndex, pageSize) ;
 
             
