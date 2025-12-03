@@ -65,8 +65,8 @@ namespace JuliePro.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Discipline_Id"] = new SelectList(_context.Disciplines, "Id", "Id", @record.Discipline_Id);
-            ViewData["Trainer_Id"] = new SelectList(_context.Trainers, "Id", "Email", @record.Trainer_Id);
+            record.DisciplineList = new SelectList(_context.Disciplines, "Id", "Id", @record.Discipline_Id);
+            record.TrainerList = new SelectList(_context.Trainers, "Id", "TrainerFullName", @record.Trainer_Id);
             return View(@record);
         }
         public async Task<IActionResult> Edit(int? id)
@@ -117,17 +117,42 @@ namespace JuliePro.Controllers
             return View(@record);
         }
 
-        // GET: Record/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null) return NotFound();
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-            var record = await _service.GetByIdAsync(id.Value);
-            if (record == null) return NotFound();
+            var record = await _context.Records
+                .Include(x => x.Discipline)
+                .Include(x => x.Trainer)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
-            var vm = await _service.BuildViewModelAsync(null);
-            return View(vm);
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            // On construit le ViewModel
+            var viewModel = new RecordViewModel
+            {
+               
+                Id = record.Id ,
+                Date = record.Date ,
+                Discipline_Id = record.Discipline.Id , 
+                DisciplineName = record.Discipline.Name ,
+                Amount = record.Amount,
+                Unit = record.Unit,
+                Trainer_Id = record.Trainer.Id,
+                TrainerFullName = record.Trainer.FullName
+
+            };
+
+            return View(viewModel);
         }
+
+
 
 
         // POST: Record/Delete/5

@@ -52,11 +52,13 @@
                     @Html.DisplayFor(modelItem => item.TrainerFullName)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">@Locals["Edit"]</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">@Locals["Details"]</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">@Locals["Delete"]</a>
+
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
