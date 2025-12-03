@@ -34,32 +34,23 @@ namespace JuliePro.Controllers
 
 
         // GET: Record/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
+            var vm = await _service.GetByIdAsync(id);
+            if (vm == null)
                 return NotFound();
-            }
 
-            var @record = await _context.Records
-                .Include(x => x.Discipline)
-                .Include(x => x.Trainer)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@record == null)
-            {
-                return NotFound();
-            }
-
-            return View(@record);
+            return View(vm);
         }
+
 
         // GET: Record/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["Discipline_Id"] = new SelectList(_context.Disciplines, "Id", "Id");
-            ViewData["Trainer_Id"] = new SelectList(_context.Trainers, "Id", "Email");
-            return View();
+            var vm = await _service.BuildViewModelAsync();
+            return View(vm);
         }
+
 
         // POST: Record/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -78,23 +69,15 @@ namespace JuliePro.Controllers
             ViewData["Trainer_Id"] = new SelectList(_context.Trainers, "Id", "Email", @record.Trainer_Id);
             return View(@record);
         }
-
-        // GET: Record/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var @record = await _context.Records.FindAsync(id);
-            if (@record == null)
-            {
-                return NotFound();
-            }
-            ViewData["Discipline_Id"] = new SelectList(_context.Disciplines, "Id", "Id", @record.Discipline_Id);
-            ViewData["Trainer_Id"] = new SelectList(_context.Trainers, "Id", "Email", @record.Trainer_Id);
-            return View(@record);
+            var record = await _context.Records.FindAsync(id.Value);
+            if (record == null) return NotFound();
+
+            var vm = await _service.BuildViewModelAsync(record);
+            return View(vm);
         }
 
         // POST: Record/Edit/5
@@ -102,7 +85,7 @@ namespace JuliePro.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Discipline_Id,Amount,Unit,Trainer_Id")] Record @record)
+        public async Task<IActionResult> Edit(int id, Record @record)
         {
             if (id != @record.Id)
             {
@@ -137,22 +120,15 @@ namespace JuliePro.Controllers
         // GET: Record/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var @record = await _context.Records
-                .Include(x => x.Discipline)
-                .Include(x => x.Trainer)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@record == null)
-            {
-                return NotFound();
-            }
+            var record = await _service.GetByIdAsync(id.Value);
+            if (record == null) return NotFound();
 
-            return View(@record);
+            var vm = await _service.BuildViewModelAsync(null);
+            return View(vm);
         }
+
 
         // POST: Record/Delete/5
         [HttpPost, ActionName("Delete")]

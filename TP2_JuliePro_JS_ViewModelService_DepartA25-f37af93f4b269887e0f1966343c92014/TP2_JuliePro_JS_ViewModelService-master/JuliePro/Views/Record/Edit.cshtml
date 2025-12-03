@@ -1,4 +1,4 @@
-﻿@model JuliePro.Models.Record
+﻿@model JuliePro.Models.RecordViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Discipline_Id" class="control-label"></label>
-                <select asp-for="Discipline_Id" class="form-control" asp-items="ViewBag.Discipline_Id"></select>
+                <select asp-for="Discipline_Id" class="form-control" asp-items="ViewBag.DisciplineName"></select>
                 <span asp-validation-for="Discipline_Id" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -36,7 +36,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Trainer_Id" class="control-label"></label>
-                <select asp-for="Trainer_Id" class="form-control" asp-items="ViewBag.Trainer_Id"></select>
+                <select asp-for="Trainer_Id" class="form-control" asp-items="ViewBag.TrainerFullName"></select>
                 <span asp-validation-for="Trainer_Id" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -51,5 +51,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

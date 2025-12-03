@@ -49,13 +49,28 @@ namespace JuliePro.Services
         }
 
 
-        public async Task<Record?> GetByIdAsync(int id)
+        public async Task<RecordViewModel?> GetByIdAsync(int id)
         {
-            return await _context.Records
+            var rec = await _context.Records
                 .Include(r => r.Discipline)
                 .Include(r => r.Trainer)
                 .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (rec == null) return null;
+
+            return new RecordViewModel
+            {
+                Id = rec.Id,
+                Date = rec.Date,
+                Amount = rec.Amount,
+                Unit = rec.Unit,
+                Discipline_Id = rec.Discipline_Id.Value,
+                Trainer_Id = rec.Trainer_Id.Value,
+                DisciplineName = rec.Discipline?.Name,
+                TrainerFullName = rec.Trainer != null ? $"{rec.Trainer.FirstName} {rec.Trainer.LastName}" : ""
+            };
         }
+
 
         public async Task<RecordViewModel> BuildViewModelAsync(Record? record = null)
         {
