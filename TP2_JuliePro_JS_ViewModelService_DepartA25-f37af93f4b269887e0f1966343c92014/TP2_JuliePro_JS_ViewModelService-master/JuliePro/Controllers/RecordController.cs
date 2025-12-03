@@ -22,15 +22,16 @@ namespace JuliePro.Controllers
             _service = service;
         }
 
-        
+
 
 
         // GET: Record
         public async Task<IActionResult> Index()
         {
-            var list = await _service.GetAllAsync();
-            return View(list);
+            var records = await _service.GetAllAsync();
+            return View(records);
         }
+
 
         // GET: Record/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -65,7 +66,7 @@ namespace JuliePro.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Record @record)
+        public async Task<IActionResult> Create(RecordViewModel @record)
         {
             if (ModelState.IsValid)
             {

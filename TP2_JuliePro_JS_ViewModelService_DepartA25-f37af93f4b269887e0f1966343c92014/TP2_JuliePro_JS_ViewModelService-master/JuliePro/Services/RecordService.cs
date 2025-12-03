@@ -5,22 +5,49 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JuliePro.Services
 {
-    public class RecordService
+    public class RecordService : ServiceBaseEF<Record>
     {
         private readonly JulieProDbContext _context;
 
-        public RecordService(JulieProDbContext context)
+       public RecordService(JulieProDbContext context) : base(context)
         {
             _context = context;
         }
 
-        public async Task<List<Record>> GetAllAsync()
+        public async Task<List<RecordViewModel>> GetAllAsync()
         {
-            return await _context.Records
-                .Include(r => r.Discipline)
-                .Include(r => r.Trainer)
-                .ToListAsync();
+            var records = await base.GetAllAsync();
+
+            var disciplines = await _dbContext.Disciplines.ToListAsync();
+            var trainers = await _dbContext.Trainers.ToListAsync();
+
+            var result = new List<RecordViewModel>();
+
+            foreach (var rec in records)
+            {
+                var model = new RecordViewModel
+                {
+                    Id = rec.Id,
+                    Date = rec.Date,
+                    Amount = rec.Amount,
+                    Unit = rec.Unit,
+
+                    Discipline_Id = rec.Discipline_Id.Value,
+                    Trainer_Id = rec.Trainer_Id.Value
+                };
+
+                var trainer = trainers.FirstOrDefault(t => t.Id == rec.Trainer_Id);
+                var discipline = disciplines.FirstOrDefault(d => d.Id == rec.Discipline_Id);
+
+                model.TrainerFullName = trainer != null ? trainer.FullName : "";
+                model.DisciplineName = discipline != null ? discipline.Name : "";
+
+                result.Add(model);
+            }
+
+            return result;
         }
+
 
         public async Task<Record?> GetByIdAsync(int id)
         {
