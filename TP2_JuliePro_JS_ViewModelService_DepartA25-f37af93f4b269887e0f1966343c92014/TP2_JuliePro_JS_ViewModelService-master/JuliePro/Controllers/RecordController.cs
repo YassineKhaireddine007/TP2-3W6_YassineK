@@ -16,7 +16,7 @@ namespace JuliePro.Controllers
         private readonly JulieProDbContext _context;
         private readonly RecordService _service;
 
-        public RecordController(JulieProDbContext context , RecordService service)
+        public RecordController(JulieProDbContext context, RecordService service)
         {
             _context = context;
             _service = service;
@@ -134,14 +134,14 @@ namespace JuliePro.Controllers
                 return NotFound();
             }
 
-            // On construit le ViewModel
+
             var viewModel = new RecordViewModel
             {
-               
-                Id = record.Id ,
-                Date = record.Date ,
-                Discipline_Id = record.Discipline.Id , 
-                DisciplineName = record.Discipline.Name ,
+
+                Id = record.Id,
+                Date = record.Date,
+                Discipline_Id = record.Discipline.Id,
+                DisciplineName = record.Discipline.Name,
                 Amount = record.Amount,
                 Unit = record.Unit,
                 Trainer_Id = record.Trainer.Id,
@@ -174,5 +174,38 @@ namespace JuliePro.Controllers
         {
             return _context.Records.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> TrainerIndex(int trainerId)
+        {
+            var trainer = await _context.Trainers
+                .FirstOrDefaultAsync(t => t.Id == trainerId);
+
+            if (trainer == null)
+                return NotFound();
+
+            var records = await _context.Records
+                .Where(r => r.Trainer_Id == trainerId)
+                .Include(r => r.Discipline)
+                .Include(r => r.Trainer)
+                .OrderByDescending(r => r.Date)
+                .ToListAsync();
+
+            
+            var recordsVm = records.Select(r => new RecordViewModel
+            {
+                Id = r.Id,
+                Date = r.Date,
+                Discipline_Id = r.Discipline.Id,
+                DisciplineName = r.Discipline.Name,
+                Amount = r.Amount,
+                Unit = r.Unit,
+                Trainer_Id = r.Trainer.Id,
+                TrainerFullName = r.Trainer.FullName
+
+            }).ToList();
+
+            return View(recordsVm);
+        }
+
     }
 }

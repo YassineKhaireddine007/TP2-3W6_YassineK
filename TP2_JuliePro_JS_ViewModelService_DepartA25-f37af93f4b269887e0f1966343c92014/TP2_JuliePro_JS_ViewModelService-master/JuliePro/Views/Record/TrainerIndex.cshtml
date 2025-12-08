@@ -1,0 +1,44 @@
+﻿@model IEnumerable<JuliePro.Models.RecordViewModel>
+
+@{
+    ViewData["Title"] = "Records";
+}
+
+@{
+    var firstRecord = Model.FirstOrDefault();
+}
+
+<h2>@Locals["RecordsOf", firstRecord?.TrainerFullName]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Locals["Date"]</th>
+            <th>@Locals["Discipline"]</th>
+            <th>@Locals["Amount"]</th>
+            <th>@Locals["Trainer"]</th>
+            <th>@Locals["Edit"]</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var r in Model)
+        {
+           
+            <tr>
+                <td>@r.Date</td>
+                <td>@r.DisciplineName</td>
+                <td>@($"{r.Amount} {r.Unit}")</td>
+                <td>@r.TrainerFullName</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@r.Id">@Locals["Edit"]</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Index">@Locals["Back to List"]</a>
+</p>
+

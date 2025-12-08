@@ -117,13 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="RecordsOf" xml:space="preserve">
-    <value>{0}'s Records</value>
-  </data>
   <data name="Index" xml:space="preserve">
     <value>Records Index</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>Back to Trainers List</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="RecordsOf" xml:space="preserve">
+    <value>{0}'s Records</value>
+  </data>
+  <data name="Trainer" xml:space="preserve">
+    <value>Trainer</value>
   </data>
 </root>

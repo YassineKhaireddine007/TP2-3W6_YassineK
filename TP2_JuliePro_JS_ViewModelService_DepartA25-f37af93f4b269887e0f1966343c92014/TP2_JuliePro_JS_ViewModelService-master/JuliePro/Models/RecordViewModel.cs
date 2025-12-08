@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace JuliePro.Models
 {
@@ -13,8 +14,10 @@ namespace JuliePro.Models
         public int Discipline_Id { get; set; }
         public int Trainer_Id { get; set; }
 
-        
+        [Display(Name = "Discipline")]
         public string? DisciplineName { get; set; }
+
+        [Display(Name = "Trainer")]
         public string? TrainerFullName { get; set; }
 
         

@@ -18,7 +18,7 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Discipline_Id)
+                @Html.DisplayNameFor(model => model.DisciplineName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Amount)
@@ -27,7 +27,7 @@
                 @Html.DisplayNameFor(model => model.Unit)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Trainer_Id)
+                @Html.DisplayNameFor(model => model.TrainerFullName)
             </th>
             <th></th>
         </tr>
@@ -61,4 +61,40 @@
         }
     </tbody>
 </table>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css" />
+
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var table = $('#recordsTable').DataTable({
+                paging: true,
+                searching: true,
+                ordering: true,
+                order: [[0, 'desc']],
+                pageLength: 10
+            });
+
+            // Forage / expand row
+            $('#recordsTable tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    row.child(tr.data('child')).show();
+                    tr.addClass('shown');
+                }
+            });
+        });
+    </script>
+}
 
