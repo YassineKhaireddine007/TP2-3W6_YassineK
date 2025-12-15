@@ -57,17 +57,17 @@ namespace JuliePro.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(RecordViewModel @record)
+        public async Task<IActionResult> Create(RecordViewModel recordVM)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@record);
+                _context.Add(recordVM);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            record.DisciplineList = new SelectList(_context.Disciplines, "Id", "Id", @record.Discipline_Id);
-            record.TrainerList = new SelectList(_context.Trainers, "Id", "TrainerFullName", @record.Trainer_Id);
-            return View(@record);
+            recordVM.DisciplineList = new SelectList(_context.Disciplines, "Id", "Name", recordVM.Discipline_Id);
+            recordVM.TrainerList = new SelectList(_context.Trainers, "Id", "TrainerFullName", recordVM.Trainer_Id);
+            return View(recordVM);
         }
         public async Task<IActionResult> Edit(int? id)
         {
