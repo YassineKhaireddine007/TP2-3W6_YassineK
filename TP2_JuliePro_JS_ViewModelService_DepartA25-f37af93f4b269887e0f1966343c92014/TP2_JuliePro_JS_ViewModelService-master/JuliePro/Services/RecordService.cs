@@ -16,37 +16,28 @@ namespace JuliePro.Services
 
         public async Task<List<RecordViewModel>> GetAllAsync()
         {
-            var records = await base.GetAllAsync();
+            var records = await _context.Records
+                .Include(r => r.Trainer)
+                .Include(r => r.Discipline)
+                .ToListAsync();
 
-            var disciplines = await _dbContext.Disciplines.ToListAsync();
-            var trainers = await _dbContext.Trainers.ToListAsync();
-
-            var result = new List<RecordViewModel>();
-
-            foreach (var rec in records)
+            return records.Select(rec => new RecordViewModel
             {
-                var model = new RecordViewModel
-                {
-                    Id = rec.Id,
-                    Date = rec.Date,
-                    Amount = rec.Amount,
-                    Unit = rec.Unit,
+                Record = rec, 
 
-                    Discipline_Id = rec.Discipline_Id.Value,
-                    Trainer_Id = rec.Trainer_Id.Value
-                };
+                Id = rec.Id,
+                Date = rec.Date,
+                Amount = rec.Amount,
+                Unit = rec.Unit,
 
-                var trainer = trainers.FirstOrDefault(t => t.Id == rec.Trainer_Id);
-                var discipline = disciplines.FirstOrDefault(d => d.Id == rec.Discipline_Id);
+                Discipline_Id = rec.Discipline_Id.Value,
+                Trainer_Id = rec.Trainer_Id.Value,
 
-                model.TrainerFullName = trainer != null ? trainer.FullName : "";
-                model.DisciplineName = discipline != null ? discipline.Name : "";
-
-                result.Add(model);
-            }
-
-            return result;
+                TrainerFullName = rec.Trainer.FullName,
+                DisciplineName = rec.Discipline.Name
+            }).ToList();
         }
+
 
 
         public async Task<RecordViewModel?> GetByIdAsync(int id)

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JuliePro.Models
@@ -16,6 +17,7 @@ namespace JuliePro.Models
         public int? Discipline_Id { get; set; }
 
         [Display(Name = "Discipline")]
+        [ValidateNever]
         public virtual Discipline Discipline { get; set; }
 
         [Display(Name = "Amount")]
@@ -30,7 +32,8 @@ namespace JuliePro.Models
         [Display(Name = "Trainer_Id")] 
         public int? Trainer_Id { get; set; }
 
-        [Display(Name = "Trainer")] 
+        [Display(Name = "Trainer")]
+        [ValidateNever]
         public virtual Trainer Trainer { get; set; }
     }
 }

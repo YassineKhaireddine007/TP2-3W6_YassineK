@@ -61,14 +61,26 @@ namespace JuliePro.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(recordVM);
+                var record = new Record
+                {
+                    Date = recordVM.Date,
+                    Discipline_Id = recordVM.Discipline_Id,
+                    Amount = recordVM.Amount ,
+                    Unit = recordVM.Unit ,
+                    Trainer_Id = recordVM.Trainer_Id,
+
+                };
+
+                _context.Add(record);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             recordVM.DisciplineList = new SelectList(_context.Disciplines, "Id", "Name", recordVM.Discipline_Id);
             recordVM.TrainerList = new SelectList(_context.Trainers, "Id", "TrainerFullName", recordVM.Trainer_Id);
             return View(recordVM);
         }
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();

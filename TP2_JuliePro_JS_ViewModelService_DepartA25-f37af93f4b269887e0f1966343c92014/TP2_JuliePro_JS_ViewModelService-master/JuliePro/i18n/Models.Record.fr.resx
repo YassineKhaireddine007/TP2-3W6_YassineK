@@ -117,20 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Amount" xml:space="preserve">
+    <value>Montant </value>
+  </data>
+  <data name="Discipline_Id" xml:space="preserve">
+    <value>Discipline</value>
+  </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>
-  <data name="Discipline_Id" xml:space="preserve">
-    <value>Discipline</value>
-  </data>
   <data name="Discipline" xml:space="preserve">
     <value>Discipline</value>
-  </data>
-  <data name="Amount" xml:space="preserve">
-    <value>Montant du record</value>
   </data>
   <data name="Unit" xml:space="preserve">
     <value>Unité</value>

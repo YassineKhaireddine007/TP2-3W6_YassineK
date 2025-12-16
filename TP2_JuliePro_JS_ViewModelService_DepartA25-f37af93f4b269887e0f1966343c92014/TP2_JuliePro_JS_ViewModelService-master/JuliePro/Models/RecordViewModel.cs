@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace JuliePro.Models
@@ -23,5 +24,8 @@ namespace JuliePro.Models
         
         public SelectList? DisciplineList { get; set; }
         public SelectList? TrainerList { get; set; }
+
+        [ValidateNever]
+        public Record Record { get; set; }
     }
 }

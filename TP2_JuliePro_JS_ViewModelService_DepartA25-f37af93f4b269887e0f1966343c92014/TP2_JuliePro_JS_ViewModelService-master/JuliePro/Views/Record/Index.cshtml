@@ -14,6 +14,7 @@
 <table class="table" id="recordsTable">
     <thead>
         <tr>
+            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.Date)
             </th>
@@ -35,11 +36,20 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-            <td>
+            var childHtml = $@"
+                <div style='padding:10px'>
+                <h5>Trainer Details</h5>
+                <p><b>First Name :</b> {item.Record.Trainer.FirstName}</p>
+                <p><b>Last Name :</b> {item.Record.Trainer.LastName}</p>
+                <p><b>Gender :</b> {item.Record.Trainer.Genre}</p>
+                <p><b>Email :</b> {item.Record.Trainer.Email}</p>
+                </div>";
 
-            </td>
-                <td >
+            <tr data-child="@Html.Raw(childHtml)">
+                <td class="details-control">
+                    <i class="fa-solid fa-plus"></i>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
@@ -58,7 +68,6 @@
                     <a asp-action="Edit" asp-route-id="@item.Id">@Locals["Edit"]</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">@Locals["Details"]</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">@Locals["Delete"]</a>
-
                 </td>
             </tr>
         }
@@ -73,7 +82,7 @@
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
 
     <script>
-        $(document).ready(function () {
+                $(document).ready(function () {
 
             var table = $('#recordsTable').DataTable({
                 paging: true,
@@ -83,23 +92,23 @@
                 pageLength: 10
             });
 
-            // Forage / expand row
-            $('#recordsTable tbody').on('click', 'tr', function () {
-
-
+            $('#recordsTable tbody').on('click', 'td.details-control', function () {
                 var tr = $(this).closest('tr');
                 var row = table.row(tr);
-
+                var icon = $(this).find('i'); 
                 if (row.child.isShown()) {
                     row.child.hide();
                     tr.removeClass('shown');
+                    icon.removeClass('fa-minus').addClass('fa-plus'); 
                 }
                 else {
                     row.child(tr.data('child')).show();
                     tr.addClass('shown');
+                    icon.removeClass('fa-plus').addClass('fa-minus'); 
                 }
             });
         });
+
     </script>
 }
 
